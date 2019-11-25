@@ -2,7 +2,8 @@ var loadImage = (function(){
     var _oCurrentImage;
     var _oFileHandler;
     var _oImageTag;
-    var _iImageAngle = 0;
+	var _bInitialLandscape;
+	var _bInitialImage = true;
 
     function _setImageProperties () {
         _oImageTag = document.getElementById("sample");
@@ -28,33 +29,43 @@ var loadImage = (function(){
         oReader.readAsDataURL(oFile);
     };
 
-    function _setImageAsBackground (oEvt)  {
-        _oCurrentImage = oEvt.target.result;
-        _oImageTag.src = _oCurrentImage;
-        _iImageAngle = 0;
+    function _setNewImageProperies ()  {
+		_setInitialOrientation();
     }
 
     function _load () {
         _oFileHandler.click();
     }
 
-    function _rotateImage () {
-        _iImageAngle += 90
-        _oImageTag.setAttribute('style','transform:rotate(' + _iImageAngle + 'deg)');
-    }
+	function _setInitialOrientation () {
+		_bInitialLandscape = _oImageTag.naturalHeight < _oImageTag.naturalWidth;
+	}
+	
+	function _setImageSize () {
+		var oContainerElement = _oImageTag.parentElement;
+		var size = Math.min(oContainerElement.offsetWidth, oContainerElement.offsetHeight);
+		_oImageTag.style.maxHeight = size + "px";
+		_oImageTag.style.maxWidth = size + "px";
+	}
 
     return {
         init: function () {
             _addLoadFile();
-            _setImageProperties();
+			_setImageProperties();
+			_setInitialOrientation();
+			_setImageSize();
         },
 
         load: function () {
             _load();
         },
 
-        rotateImage: function () {
-            _rotateImage();
-        }
+		setNewImageProperies: function () {
+			if (!_bInitialImage) {
+				_setNewImageProperies();
+			} else {
+				_bInitialImage = false;
+			}
+		}
     }
 })()
