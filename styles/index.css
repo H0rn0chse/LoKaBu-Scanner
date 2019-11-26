@@ -43,7 +43,8 @@ button {
     height: 50px;
     width: 50px;
     background-color: red;
-    opacity: 0.5;
+	opacity: 0.5;
+	z-index: 2;
 }
 
 #right {

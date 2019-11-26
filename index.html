@@ -10,11 +10,14 @@
 		<script type="text/javascript" src='scripts/lib/jquery-ui-1.12.1/jquery-ui.min.js'></script>
 		-->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-		<script type="text/javascript" src='https://unpkg.com/tesseract.js@v2.0.0-beta.1/dist/tesseract.min.js'></script>
+		<script src='https://unpkg.com/tesseract.js@v2.0.0-beta.1/dist/tesseract.min.js'></script>
 		<script type="text/javascript" src='https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'></script>
 
         <script type="text/javascript" src="scripts/index.js"></script>
-        <script type="text/javascript" src="scripts/loadImage.js"></script>
+		<script type="text/javascript" src="scripts/loadImage.js"></script>
+		<script type="text/javascript" src="scripts/recogImage.js"></script>
+		<script type="text/javascript" src="scripts/tesseractWorker.js"></script>
+		<script type="text/javascript" src="scripts/editData.js"></script>
 
 
         <link rel="stylesheet" href="styles/index.css">
@@ -34,7 +37,9 @@
                 <div id="imgSelection"></div>
             </div>
             <div id="right">
-
+				<button onclick="">Export</button>
+				<canvas id="canvas"></canvas>
+				<div id="results"></div>
             </div>
         </div>
         <div id="hidden"></div>
