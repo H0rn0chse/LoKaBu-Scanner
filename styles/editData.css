@@ -1,0 +1,47 @@
+input[type="checkbox"] {
+	transform: scale(1.5);
+}
+
+.upperBaseLine {
+	border-bottom: 5px solid black;
+	margin-bottom: 5px;
+	padding-bottom: 1px;
+}
+
+.upperBaseLine > * {
+	margin-right: 2px;
+	margin-left: 2px;
+}
+
+.baseLine {
+	margin-left: 20px;
+	margin-bottom: 5px;
+}
+
+.dateInput {
+
+}
+
+.storeSelect {
+
+}
+
+.accountSelect {
+
+}
+
+.checkboxInput {
+
+}
+
+.valueInput {
+
+}
+
+.personSelect {
+
+}
+
+.typeSelect {
+
+}

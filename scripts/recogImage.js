@@ -6,6 +6,12 @@ var recogImage = (function () {
 
 	function _finallyCallback (obj){
 		console.log(obj);
+		_hideCanvas();
+		var aResult = []
+		obj.data.lines.forEach(function (line) {
+			aResult.push(line.text);
+		});
+		editData.load(aResult);
 	}
 
 	function _copyAndCutImage () {
@@ -15,6 +21,7 @@ var recogImage = (function () {
 		var context = canvas.getContext('2d');
 
 		//Reset canvas
+		canvas.style.visibility='visible';
 		canvas.height = canvas.width = 0;
 		
 		//get Rectangle
@@ -82,12 +89,21 @@ var recogImage = (function () {
 		context.translate(translateX, translateY);
 		context.rotate(imgAngle * Math.PI / 180)
 		context.drawImage(sourceImage, sourceX * sizeFactor, sourceY * sizeFactor, targetWidth * sizeFactor, targetHeight * sizeFactor, 0, 0, canvas.width, canvas.height);
-		context.restore()
+		context.restore();
+
+		return canvas;
 	}
+
+	function _hideCanvas () {
+		var canvas = document.getElementById("canvas");
+		canvas.style.visibility='hidden';
+		canvas.width = 0;
+		canvas.height = 0;
+	};
 
 	function _start () {
 		var img = _copyAndCutImage();
-		//TesseractWorker.loadImage(img, _progressCallback, _finallyCallback);
+		TesseractWorker.loadImage(img, _progressCallback, _finallyCallback);
 	}
 
 	return {

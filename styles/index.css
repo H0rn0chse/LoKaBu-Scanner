@@ -21,29 +21,47 @@ html, body {
     height: 100%;
 }
 
-button {
-    z-index: 2;
+#left button {
+	position: fixed;
+	z-index: 2;
+	top: 0px;
+}
+
+#left button:nth-of-type(2) {
+	top: 30px;
 }
 
 #left {
-    background-color: blueviolet;
+	background-color: blueviolet;
 }
 
 #left > * {
-    position: relative;
+	position: relative;
 }
 
 #sample, #sample:after {
     max-width:100%;
     height:auto;
-    z-index: 1;
+	z-index: 1;
+	display: block;
+	top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+	margin: auto;
 }
 
 #imgSelection {
     height: 50px;
     width: 50px;
     background-color: red;
-    opacity: 0.5;
+	opacity: 0.5;
+	z-index: 2;
+
+	/*temp*/
+	height: 112px;
+    left: 591px;
+    top: -608px;
 }
 
 #right {

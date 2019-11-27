@@ -1,3 +1,6 @@
 window.onload = function () {
-    this.loadImage.init();
+	loadImage.init();
+	recogImage.init();
+	editData.init();
+	TesseractWorker.init();
 };
