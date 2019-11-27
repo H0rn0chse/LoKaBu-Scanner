@@ -1,14 +1,14 @@
 var loadImage = (function(){
-    var _oCurrentImage;
     var _oFileHandler;
     var _oImageTag;
+	var _iImageAngle = 0// 270;
 	var _bInitialLandscape;
 	var _bInitialImage = true;
 
     function _setImageProperties () {
         _oImageTag = document.getElementById("sample");
         $('#imgSelection').draggable({ containment: "parent" });
-        $('#imgSelection').resizable();
+        $('#imgSelection').resizable();//{ containment: "parent" });
     }
 
     function _addLoadFile () {
@@ -25,25 +25,43 @@ var loadImage = (function(){
     function _handleFileSelect (oEvt) {
         const oFile = oEvt.target.files[0];
         const oReader = new FileReader();
-        oReader.onload = _setImageAsBackground
+        oReader.onload = function (oEvt) {
+			_oImageTag.src = oEvt.target.result;
+		}
         oReader.readAsDataURL(oFile);
     };
 
     function _setNewImageProperies ()  {
+		//_iImageAngle = 270;
 		_setInitialOrientation();
+		_rotateImage();
     }
 
     function _load () {
         _oFileHandler.click();
     }
 
+    function _rotateImage () {
+		/*_iImageAngle += 90
+		_iImageAngle = _iImageAngle % 360
+		var iOffset = Math.abs(_oImageTag.offsetWidth - _oImageTag.offsetHeight) / 2;
+		_oImageTag.setAttribute('style','transform:rotate(' + _iImageAngle + 'deg)');
+
+		if (_bInitialLandscape) {
+			_oImageTag.style.top = iOffset + "px";
+		} else {
+			_oImageTag.style.left = iOffset + "px";
+		}*/
+	}
+
 	function _setInitialOrientation () {
 		_bInitialLandscape = _oImageTag.naturalHeight < _oImageTag.naturalWidth;
+		console.log(_bInitialLandscape);
 	}
 	
 	function _setImageSize () {
 		var oContainerElement = _oImageTag.parentElement;
-		var size = Math.min(oContainerElement.offsetWidth, oContainerElement.offsetHeight)-50;
+		var size = Math.min(oContainerElement.offsetWidth, oContainerElement.offsetHeight) - 50;
 		_oImageTag.style.maxHeight = size + "px";
 		_oImageTag.style.maxWidth = size + "px";
 	}
@@ -54,11 +72,20 @@ var loadImage = (function(){
 			_setImageProperties();
 			_setInitialOrientation();
 			_setImageSize();
+			_rotateImage();
         },
 
         load: function () {
             _load();
         },
+
+        rotateImage: function () {
+            _rotateImage();
+		},
+		
+		getRotation: function () {
+			return _iImageAngle;
+		},
 
 		setNewImageProperies: function () {
 			if (!_bInitialImage) {
@@ -68,4 +95,4 @@ var loadImage = (function(){
 			}
 		}
     }
-})()
+})();
