@@ -97,6 +97,8 @@ var recogImage = (function () {
 	function _hideCanvas () {
 		var canvas = document.getElementById("canvas");
 		canvas.style.visibility='hidden';
+		canvas.width = 0;
+		canvas.height = 0;
 	};
 
 	function _start () {

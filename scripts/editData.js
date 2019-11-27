@@ -10,7 +10,69 @@ var editData = (function () {
 		var oResult = document.getElementById("results");
 		oResult.innerHTML = "";
 
+		var oUpperBaseLine = document.createElement("div");
+		oUpperBaseLine.classList.add("upperBaseLine");
+
+		var exportButton = document.createElement("button");
+		exportButton.innerText = "Export";
+
+		var selectAllButton = document.createElement("button");
+		selectAllButton.innerText = "Select All";
+		selectAllButton.onclick = _selectAll;
+
+		var selectNoneButton = document.createElement("button");
+		selectNoneButton.innerText = "Unselect All";
+		selectNoneButton.onclick = _selectNone;
+
+		var setTypeButton = document.createElement("button");
+		setTypeButton.innerText = "Set Type";
+		setTypeButton.onclick = _setType;
+
+		var outerTypeSelect = document.createElement("select");
+		_types.forEach(function (type) {
+			var oOption = document.createElement("option");
+			oOption.text = type;
+			oOption.value = type;
+			outerTypeSelect.appendChild(oOption);
+		});
+		outerTypeSelect.classList.add("outerTypeSelect");
+
+		var setPersonButton = document.createElement("button");
+		setPersonButton.innerText = "Set Person";
+		setPersonButton.onclick = _setPerson;
+
+		var outerPersonSelect = document.createElement("select");
+		_persons.forEach(function (person) {
+			var oOption = document.createElement("option");
+			oOption.text = person;
+			oOption.value = person;
+			outerPersonSelect.appendChild(oOption);
+		});
+		outerPersonSelect.classList.add("outerPersonSelect");
+
+		var addLineButton = document.createElement("button");
+		addLineButton.innerText = "Add Line";
+		addLineButton.onclick = function () {
+			_addLine(0)
+		};
+
+		var deleteLineButton = document.createElement("button");
+		deleteLineButton.innerText = "Delete Line";
+		deleteLineButton.onclick = _deleteLine
+
+		oUpperBaseLine.appendChild(exportButton);
+		oUpperBaseLine.appendChild(selectAllButton);
+		oUpperBaseLine.appendChild(selectNoneButton);
+		oUpperBaseLine.appendChild(setTypeButton);
+		oUpperBaseLine.appendChild(outerTypeSelect);
+		oUpperBaseLine.appendChild(setPersonButton);
+		oUpperBaseLine.appendChild(outerPersonSelect);
+		oUpperBaseLine.appendChild(addLineButton);
+		oUpperBaseLine.appendChild(deleteLineButton);
+		oResult.appendChild(oUpperBaseLine);
+
 		var oBaseLine = document.createElement("div");
+		oBaseLine.classList.add("baseLine");
 
 		var dateInput = document.createElement("input");
 		dateInput.setAttribute("type", "date")
@@ -42,41 +104,87 @@ var editData = (function () {
 		aArr.forEach(function (elem) {
 			elem = elem.replace(/,/g, ".");
 			elem = parseFloat(elem)
-			var oLine = document.createElement("div");
 
-			var checkboxInput = document.createElement("input");
-			checkboxInput.setAttribute("type", "checkbox");
-			checkboxInput.classList.add("checkboxInput");
+			_addLine(elem)
+		});
+	};
 
-			var valueInput = document.createElement("input");
-			valueInput.setAttribute("type", "number");
-			valueInput.setAttribute("step", "0.01");
-			valueInput.value = elem;
-			valueInput.classList.add("valueInput");
+	function _selectAll () {
+		var aCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+		aCheckboxes.forEach(function (item) {
+			item.checked = true;
+		});
+	};
 
-			var personSelect = document.createElement("select");
-			_persons.forEach(function (person) {
-				var oOption = document.createElement("option");
-				oOption.text = person;
-				oOption.value = person;
-				personSelect.appendChild(oOption);
-			});
-			personSelect.classList.add("personSelect");
+	function _selectNone () {
+		var aCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+		aCheckboxes.forEach(function (item) {
+			item.checked = false;
+		});
+	};
 
-			var typeSelect = document.createElement("select");
-			_types.forEach(function (type) {
-				var oOption = document.createElement("option");
-				oOption.text = type;
-				oOption.value = type;
-				typeSelect.appendChild(oOption);
-			});
-			typeSelect.classList.add("typeSelect");
+	function _setType () {
+		var sSelectedIndex = document.querySelector(".outerTypeSelect").selectedIndex;
+		var aCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+		aCheckboxes.forEach(function (box) {
+			var oSelect = box.parentElement.querySelector(".typeSelect");
+			oSelect.selectedIndex = sSelectedIndex;
+		});
+	};
 
-			oLine.appendChild(checkboxInput);
-			oLine.appendChild(valueInput);
-			oLine.appendChild(personSelect);
-			oLine.appendChild(typeSelect);
-			oResult.appendChild(oLine);
+	function _setPerson () {
+		var sSelectedIndex = document.querySelector(".outerPersonSelect").selectedIndex;
+		var aCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+		aCheckboxes.forEach(function (box) {
+			var oSelect = box.parentElement.querySelector(".personSelect");
+			oSelect.selectedIndex = sSelectedIndex;
+		});
+	};
+
+	function _addLine (fValue) {
+		var oResult = document.getElementById("results");
+		var oLine = document.createElement("div");
+
+		var checkboxInput = document.createElement("input");
+		checkboxInput.setAttribute("type", "checkbox");
+		checkboxInput.classList.add("checkboxInput");
+
+		var valueInput = document.createElement("input");
+		valueInput.setAttribute("type", "number");
+		valueInput.setAttribute("step", "0.01");
+		valueInput.value = fValue;
+		valueInput.classList.add("valueInput");
+
+		var personSelect = document.createElement("select");
+		_persons.forEach(function (person) {
+			var oOption = document.createElement("option");
+			oOption.text = person;
+			oOption.value = person;
+			personSelect.appendChild(oOption);
+		});
+		personSelect.classList.add("personSelect");
+
+		var typeSelect = document.createElement("select");
+		_types.forEach(function (type) {
+			var oOption = document.createElement("option");
+			oOption.text = type;
+			oOption.value = type;
+			typeSelect.appendChild(oOption);
+		});
+		typeSelect.classList.add("typeSelect");
+
+		oLine.appendChild(checkboxInput);
+		oLine.appendChild(valueInput);
+		oLine.appendChild(personSelect);
+		oLine.appendChild(typeSelect);
+		oResult.appendChild(oLine);
+	};
+
+	function _deleteLine () {
+		var aCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+		aCheckboxes.forEach(function (box) {
+			var oParent = box.parentElement;
+			oParent.parentElement.removeChild(oParent);
 		});
 	};
 

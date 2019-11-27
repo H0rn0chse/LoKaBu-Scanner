@@ -43,7 +43,7 @@ var loadImage = (function(){
 	
 	function _setImageSize () {
 		var oContainerElement = _oImageTag.parentElement;
-		var size = Math.min(oContainerElement.offsetWidth, oContainerElement.offsetHeight);
+		var size = Math.min(oContainerElement.offsetWidth, oContainerElement.offsetHeight)-50;
 		_oImageTag.style.maxHeight = size + "px";
 		_oImageTag.style.maxWidth = size + "px";
 	}
