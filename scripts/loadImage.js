@@ -4,6 +4,7 @@ var loadImage = (function(){
 	var _iImageAngle = 0// 270;
 	var _bInitialLandscape;
 	var _bInitialImage = true;
+	var _sFileName = "default.png";
 
     function _setImageProperties () {
         _oImageTag = document.getElementById("sample");
@@ -23,12 +24,15 @@ var loadImage = (function(){
     };
 
     function _handleFileSelect (oEvt) {
-        const oFile = oEvt.target.files[0];
-        const oReader = new FileReader();
-        oReader.onload = function (oEvt) {
-			_oImageTag.src = oEvt.target.result;
+		const oFile = oEvt.target.files[0];
+		if (oFile) {
+			_sFileName = oFile.name;
+			const oReader = new FileReader();
+			oReader.onload = function (oEvt) {
+				_oImageTag.src = oEvt.target.result;
+			}
+			oReader.readAsDataURL(oFile);
 		}
-        oReader.readAsDataURL(oFile);
     };
 
     function _setNewImageProperies ()  {
@@ -93,6 +97,10 @@ var loadImage = (function(){
 			} else {
 				_bInitialImage = false;
 			}
+		},
+		
+		getFileName: function () {
+			return _sFileName;
 		}
     }
 })();
