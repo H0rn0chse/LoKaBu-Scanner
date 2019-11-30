@@ -13,7 +13,7 @@ var imgSelection = (function () {
 		document.onmousedown = function (oEvt) {
 			var oSelection = document.getElementById("imgSelection");
 
-			if (oEvt.path.includes(oImage) || oEvt.path.includes(oSelection)) {
+			if (oEvt.target === oImage || oEvt.target === oSelection) {
 				_bMouseDown = true;
 				
 				oSelection.style.left = oEvt.clientX + "px";
@@ -27,7 +27,7 @@ var imgSelection = (function () {
 		document.onmousemove = function (oEvt) {
 			var oSelection = document.getElementById("imgSelection");
 
-			if (_bMouseDown && (oEvt.path.includes(oImage) || oEvt.path.includes(oSelection))) {
+			if (_bMouseDown && (oEvt.target === oImage || oEvt.target === oSelection)) {
 				var iWidth = oEvt.clientX - _oInitialTopLeftPosition.x;
 				var iHeight = oEvt.clientY - _oInitialTopLeftPosition.y;
 				if (iWidth < 0) {
