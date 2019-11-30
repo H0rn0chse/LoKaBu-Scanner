@@ -108,7 +108,7 @@ var recogImage = (function () {
 
 	return {
 		init: function () {
-
+			
 		},
 		start: function () {
 			_start();

@@ -3,5 +3,6 @@ window.onload = function () {
 	recogImage.init();
 	editData.init();
 	saveData.init();
+	imgSelection.init();
 	TesseractWorker.init();
 };

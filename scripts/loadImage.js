@@ -8,8 +8,6 @@ var loadImage = (function(){
 
     function _setImageProperties () {
         _oImageTag = document.getElementById("sample");
-        $('#imgSelection').draggable({ containment: "parent" });
-        $('#imgSelection').resizable();//{ containment: "parent" });
     }
 
     function _addLoadFile () {
