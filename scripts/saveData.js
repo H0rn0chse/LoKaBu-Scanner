@@ -24,7 +24,7 @@ var saveData = (function () {
 
 		var aLines = oResult.querySelectorAll(".line");
 		aLines.forEach(function (oLine) {
-			var sValue = oLine.querySelectorAll(".valueInput")[0].value;
+			var sValue = oLine.querySelectorAll(".valueInput")[0].value.replace(/,/g, "").replace(/^0+/, '');
 			var sPerson = oLine.querySelectorAll(".personSelect")[0].value;
 			var sTargetAccount = (oLine.querySelectorAll(".accountSelect:not(.hideElement)")[0] || {}).value || "";
 			var sType = oLine.querySelectorAll(".typeSelect")[0].value;
