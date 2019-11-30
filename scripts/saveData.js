@@ -1,6 +1,11 @@
 var saveData = (function () {
 	"use strict";
 
+	function _noInvalid() {
+		var oResult = document.getElementById("results");
+		return !oResult.querySelectorAll(".invalidInput").length > 0;
+	}
+
 	function _getFileName () {
 		var iTimestamp = Date.now();
 		var sFilename = loadImage.getFileName();
@@ -50,7 +55,11 @@ var saveData = (function () {
 		},
 
 		submit: function () {
-			_save(_getFileName(), _collectData());
+			if (_noInvalid()) {
+				_save(_getFileName(), _collectData());
+			} else {
+				alert ("There are some invalid inputs!");
+			}
 		}
 	};
 })();

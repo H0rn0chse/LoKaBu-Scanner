@@ -54,7 +54,7 @@ var editData = (function () {
 		var addLineButton = document.createElement("button");
 		addLineButton.innerText = "Add Line";
 		addLineButton.onclick = function () {
-			_addLine(0)
+			_addLine("0,00")
 		};
 
 		var deleteLineButton = document.createElement("button");
@@ -108,8 +108,8 @@ var editData = (function () {
 
 		aArr.forEach(function (elem) {
 			elem = elem.replace(/,/g, ".");
-			elem = parseFloat(elem)
-
+			elem = parseFloat(elem).toFixed(2).toString();
+			elem = elem.replace(/\./g, ",");
 			_addLine(elem)
 		});
 	};
@@ -155,6 +155,16 @@ var editData = (function () {
 		return oSpan;
 	}
 
+	function _checkNumberInput (oEvt) {
+		var bValid = oEvt.target.checkValidity()
+		if(bValid) {
+			oEvt.target.classList.remove("invalidInput");
+		} else {
+			oEvt.target.classList.add("invalidInput");
+		}
+		return bValid;
+	}
+
 	function _addLine (fValue) {
 		var oResult = document.getElementById("results");
 		var oLine = document.createElement("div");
@@ -165,9 +175,10 @@ var editData = (function () {
 		checkboxInput.classList.add("checkboxInput");
 
 		var valueInput = document.createElement("input");
-		valueInput.setAttribute("type", "number");
-		valueInput.setAttribute("step", "0.01");
+		valueInput.setAttribute("type", "text");
+		valueInput.setAttribute("pattern", "^[0-9]+([,][0-9]{0,2})?$")
 		valueInput.value = fValue;
+		valueInput.oninput = _checkNumberInput
 		valueInput.classList.add("valueInput");
 
 		var personSelect = document.createElement("select");
@@ -187,7 +198,6 @@ var editData = (function () {
 			typeSelect.appendChild(oOption);
 		});
 		typeSelect.onchange = function (oEvt) {
-			console.log("hi")
 			switch(oEvt.target.value) {
 				case "Transfer":
 					oEvt.target.parentElement.querySelector(".accountSelect").classList.remove("hideElement");
