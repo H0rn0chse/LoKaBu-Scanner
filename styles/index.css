@@ -49,19 +49,7 @@ html, body {
     left: 0;
     right: 0;
 	margin: auto;
-}
-
-#imgSelection {
-    height: 50px;
-    width: 50px;
-    background-color: red;
-	opacity: 0.5;
-	z-index: 2;
-
-	/*temp*/
-	height: 112px;
-    left: 591px;
-    top: -608px;
+	user-select: none;
 }
 
 #right {

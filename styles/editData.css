@@ -45,3 +45,7 @@ input[type="checkbox"] {
 .typeSelect {
 
 }
+
+.hideElement {
+	visibility: hidden;
+}

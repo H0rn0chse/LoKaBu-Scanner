@@ -15,6 +15,7 @@ var editData = (function () {
 
 		var exportButton = document.createElement("button");
 		exportButton.innerText = "Export";
+		exportButton.onclick = saveData.submit;
 
 		var selectAllButton = document.createElement("button");
 		selectAllButton.innerText = "Select All";
@@ -76,6 +77,7 @@ var editData = (function () {
 
 		var dateInput = document.createElement("input");
 		dateInput.setAttribute("type", "date")
+		dateInput.valueAsDate = new Date();
 		dateInput.classList.add("dateInput");
 
 		var storeSelect = document.createElement("select");
@@ -144,6 +146,7 @@ var editData = (function () {
 	function _addLine (fValue) {
 		var oResult = document.getElementById("results");
 		var oLine = document.createElement("div");
+		oLine.classList.add("line");
 
 		var checkboxInput = document.createElement("input");
 		checkboxInput.setAttribute("type", "checkbox");
@@ -171,12 +174,33 @@ var editData = (function () {
 			oOption.value = type;
 			typeSelect.appendChild(oOption);
 		});
+		typeSelect.onchange = function (oEvt) {
+			console.log("hi")
+			switch(oEvt.target.value) {
+				case "Transfer":
+					oEvt.target.parentElement.querySelector(".accountSelect").classList.remove("hideElement");
+					break;
+				default:
+					oEvt.target.parentElement.querySelector(".accountSelect").classList.add("hideElement");
+			}
+		}
 		typeSelect.classList.add("typeSelect");
+
+		var accountSelect = document.createElement("select");
+		_accounts.forEach(function (account) {
+			var oOption = document.createElement("option");
+			oOption.text = account;
+			oOption.value = account;
+			accountSelect.appendChild(oOption);
+		});
+		accountSelect.classList.add("accountSelect");
+		accountSelect.classList.add("hideElement");
 
 		oLine.appendChild(checkboxInput);
 		oLine.appendChild(valueInput);
 		oLine.appendChild(personSelect);
 		oLine.appendChild(typeSelect);
+		oLine.appendChild(accountSelect);
 		oResult.appendChild(oLine);
 	};
 
