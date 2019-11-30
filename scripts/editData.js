@@ -112,7 +112,28 @@ var editData = (function () {
 			elem = elem.replace(/\./g, ",");
 			_addLine(elem)
 		});
+
+		var oLastLine = document.createElement("div");
+		oLastLine.classList.add("lastLine");
+
+		var oSumSpan = document.createElement("span");
+
+		oLastLine.appendChild(oSumSpan);
+		oResult.appendChild(oLastLine);
 	};
+
+	function _calcSum() {
+		var oResult = document.getElementById("results");
+		var oSpan = oResult.querySelector(".lastLine span");
+		var fSum = 0;
+		var aLineValues = oResult.querySelectorAll(".line .valueInput");
+		aLineValues.forEach(function (oInput) {
+			var sValue = oInput.value.replace(/,/g,".");
+			fSum += parseFloat(sValue);
+		})
+
+		oSpan.innerText = "Sum: " + fSum.toFixed(2).replace(/\./g,",") + " €";
+	}
 
 	function _selectAll () {
 		var aCheckboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -162,6 +183,7 @@ var editData = (function () {
 		} else {
 			oEvt.target.classList.add("invalidInput");
 		}
+		_calcSum();
 		return bValid;
 	}
 
@@ -293,6 +315,7 @@ var editData = (function () {
 
 		load: function (aArr) {
 			_load(aArr);
+			_calcSum();
 		}
 	}
 })();
