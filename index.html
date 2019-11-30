@@ -33,15 +33,17 @@
     <body>
         <div id="wrapper">
             <div id="left">
-                <button onclick="loadImage.load()">load Image</button>
-				<button onclick="recogImage.start()">start Image Recognition</button>
+				<div class="buttonArea">
+					<button onclick="loadImage.load()">load Image</button> <br />
+					<button onclick="recogImage.start()">start Image Recognition</button>
+				</div>
 				<img id="sample" onload="loadImage.setNewImageProperies()" src="images/default.png">
 				
                 <div id="imgSelection"></div>
             </div>
             <div id="right">
-				<canvas id="canvas"></canvas>
 				<div id="results"></div>
+				<canvas id="canvas"></canvas>
             </div>
         </div>
         <div id="hidden"></div>

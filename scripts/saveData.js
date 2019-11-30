@@ -1,6 +1,11 @@
 var saveData = (function () {
 	"use strict";
 
+	function _noInvalid() {
+		var oResult = document.getElementById("results");
+		return !oResult.querySelectorAll(".invalidInput").length > 0;
+	}
+
 	function _getFileName () {
 		var iTimestamp = Date.now();
 		var sFilename = loadImage.getFileName();
@@ -19,7 +24,7 @@ var saveData = (function () {
 
 		var aLines = oResult.querySelectorAll(".line");
 		aLines.forEach(function (oLine) {
-			var sValue = oLine.querySelectorAll(".valueInput")[0].value;
+			var sValue = oLine.querySelectorAll(".valueInput")[0].value.replace(/,/g, "").replace(/^0+/, '');
 			var sPerson = oLine.querySelectorAll(".personSelect")[0].value;
 			var sTargetAccount = (oLine.querySelectorAll(".accountSelect:not(.hideElement)")[0] || {}).value || "";
 			var sType = oLine.querySelectorAll(".typeSelect")[0].value;
@@ -50,7 +55,11 @@ var saveData = (function () {
 		},
 
 		submit: function () {
-			_save(_getFileName(), _collectData());
+			if (_noInvalid()) {
+				_save(_getFileName(), _collectData());
+			} else {
+				alert ("There are some invalid inputs!");
+			}
 		}
 	};
 })();

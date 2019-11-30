@@ -54,7 +54,7 @@ var editData = (function () {
 		var addLineButton = document.createElement("button");
 		addLineButton.innerText = "Add Line";
 		addLineButton.onclick = function () {
-			_addLine(0)
+			_addLine("0,00")
 		};
 
 		var deleteLineButton = document.createElement("button");
@@ -98,18 +98,42 @@ var editData = (function () {
 		});
 		accountSelect.classList.add("accountSelect");
 
+		oBaseLine.appendChild(_newLabel("Date:"));
 		oBaseLine.appendChild(dateInput);
+		oBaseLine.appendChild(_newLabel("Store:"));
 		oBaseLine.appendChild(storeSelect);
+		oBaseLine.appendChild(_newLabel("Account:"));
 		oBaseLine.appendChild(accountSelect);
 		oResult.appendChild(oBaseLine);
 
 		aArr.forEach(function (elem) {
 			elem = elem.replace(/,/g, ".");
-			elem = parseFloat(elem)
-
+			elem = parseFloat(elem).toFixed(2).toString();
+			elem = elem.replace(/\./g, ",");
 			_addLine(elem)
 		});
+
+		var oLastLine = document.createElement("div");
+		oLastLine.classList.add("lastLine");
+
+		var oSumSpan = document.createElement("span");
+
+		oLastLine.appendChild(oSumSpan);
+		oResult.appendChild(oLastLine);
 	};
+
+	function _calcSum() {
+		var oResult = document.getElementById("results");
+		var oSpan = oResult.querySelector(".lastLine span");
+		var fSum = 0;
+		var aLineValues = oResult.querySelectorAll(".line .valueInput");
+		aLineValues.forEach(function (oInput) {
+			var sValue = oInput.value.replace(/,/g,".");
+			fSum += parseFloat(sValue);
+		})
+
+		oSpan.innerText = "Sum: " + fSum.toFixed(2).replace(/\./g,",") + " €";
+	}
 
 	function _selectAll () {
 		var aCheckboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -143,6 +167,26 @@ var editData = (function () {
 		});
 	};
 
+	function _newLabel(sText, bHide) {
+		var oSpan = document.createElement("span");
+		oSpan.innerText = sText;
+		if (bHide) {
+			oSpan.classList.add("hideElement");
+		}
+		return oSpan;
+	}
+
+	function _checkNumberInput (oEvt) {
+		var bValid = oEvt.target.checkValidity()
+		if(bValid) {
+			oEvt.target.classList.remove("invalidInput");
+		} else {
+			oEvt.target.classList.add("invalidInput");
+		}
+		_calcSum();
+		return bValid;
+	}
+
 	function _addLine (fValue) {
 		var oResult = document.getElementById("results");
 		var oLine = document.createElement("div");
@@ -153,9 +197,10 @@ var editData = (function () {
 		checkboxInput.classList.add("checkboxInput");
 
 		var valueInput = document.createElement("input");
-		valueInput.setAttribute("type", "number");
-		valueInput.setAttribute("step", "0.01");
+		valueInput.setAttribute("type", "text");
+		valueInput.setAttribute("pattern", "^[0-9]+([,][0-9]{0,2})?$")
 		valueInput.value = fValue;
+		valueInput.oninput = _checkNumberInput
 		valueInput.classList.add("valueInput");
 
 		var personSelect = document.createElement("select");
@@ -175,13 +220,14 @@ var editData = (function () {
 			typeSelect.appendChild(oOption);
 		});
 		typeSelect.onchange = function (oEvt) {
-			console.log("hi")
 			switch(oEvt.target.value) {
 				case "Transfer":
 					oEvt.target.parentElement.querySelector(".accountSelect").classList.remove("hideElement");
+					oEvt.target.parentElement.querySelector("span:last-of-type").classList.remove("hideElement");
 					break;
 				default:
 					oEvt.target.parentElement.querySelector(".accountSelect").classList.add("hideElement");
+					oEvt.target.parentElement.querySelector("span:last-of-type").classList.add("hideElement");
 			}
 		}
 		typeSelect.classList.add("typeSelect");
@@ -198,8 +244,11 @@ var editData = (function () {
 
 		oLine.appendChild(checkboxInput);
 		oLine.appendChild(valueInput);
+		oLine.appendChild(_newLabel("Person:"));
 		oLine.appendChild(personSelect);
+		oLine.appendChild(_newLabel("Type:"));
 		oLine.appendChild(typeSelect);
+		oLine.appendChild(_newLabel("Account:", true));
 		oLine.appendChild(accountSelect);
 		oResult.appendChild(oLine);
 	};
@@ -266,6 +315,7 @@ var editData = (function () {
 
 		load: function (aArr) {
 			_load(aArr);
+			_calcSum();
 		}
 	}
 })();
