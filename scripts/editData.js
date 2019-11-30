@@ -189,6 +189,7 @@ var editData = (function () {
 
 	function _addLine (fValue) {
 		var oResult = document.getElementById("results");
+		var oBaseLine = document.querySelector(".lastLine");
 		var oLine = document.createElement("div");
 		oLine.classList.add("line");
 
@@ -250,7 +251,12 @@ var editData = (function () {
 		oLine.appendChild(typeSelect);
 		oLine.appendChild(_newLabel("Account:", true));
 		oLine.appendChild(accountSelect);
-		oResult.appendChild(oLine);
+
+		if (oBaseLine) {
+			oResult.insertBefore(oLine, oBaseLine);
+		} else {
+			oResult.appendChild(oLine);
+		}
 	};
 
 	function _deleteLine () {
