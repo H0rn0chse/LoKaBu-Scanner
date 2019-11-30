@@ -15,6 +15,7 @@ var editData = (function () {
 
 		var exportButton = document.createElement("button");
 		exportButton.innerText = "Export";
+		exportButton.onclick = saveData.submit;
 
 		var selectAllButton = document.createElement("button");
 		selectAllButton.innerText = "Select All";
@@ -76,6 +77,7 @@ var editData = (function () {
 
 		var dateInput = document.createElement("input");
 		dateInput.setAttribute("type", "date")
+		dateInput.valueAsDate = new Date();
 		dateInput.classList.add("dateInput");
 
 		var storeSelect = document.createElement("select");
@@ -144,6 +146,7 @@ var editData = (function () {
 	function _addLine (fValue) {
 		var oResult = document.getElementById("results");
 		var oLine = document.createElement("div");
+		oLine.classList.add("line");
 
 		var checkboxInput = document.createElement("input");
 		checkboxInput.setAttribute("type", "checkbox");
