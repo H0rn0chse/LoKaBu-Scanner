@@ -98,8 +98,11 @@ var editData = (function () {
 		});
 		accountSelect.classList.add("accountSelect");
 
+		oBaseLine.appendChild(_newLabel("Date:"));
 		oBaseLine.appendChild(dateInput);
+		oBaseLine.appendChild(_newLabel("Store:"));
 		oBaseLine.appendChild(storeSelect);
+		oBaseLine.appendChild(_newLabel("Account:"));
 		oBaseLine.appendChild(accountSelect);
 		oResult.appendChild(oBaseLine);
 
@@ -143,6 +146,15 @@ var editData = (function () {
 		});
 	};
 
+	function _newLabel(sText, bHide) {
+		var oSpan = document.createElement("span");
+		oSpan.innerText = sText;
+		if (bHide) {
+			oSpan.classList.add("hideElement");
+		}
+		return oSpan;
+	}
+
 	function _addLine (fValue) {
 		var oResult = document.getElementById("results");
 		var oLine = document.createElement("div");
@@ -179,9 +191,11 @@ var editData = (function () {
 			switch(oEvt.target.value) {
 				case "Transfer":
 					oEvt.target.parentElement.querySelector(".accountSelect").classList.remove("hideElement");
+					oEvt.target.parentElement.querySelector("span:last-of-type").classList.remove("hideElement");
 					break;
 				default:
 					oEvt.target.parentElement.querySelector(".accountSelect").classList.add("hideElement");
+					oEvt.target.parentElement.querySelector("span:last-of-type").classList.add("hideElement");
 			}
 		}
 		typeSelect.classList.add("typeSelect");
@@ -198,8 +212,11 @@ var editData = (function () {
 
 		oLine.appendChild(checkboxInput);
 		oLine.appendChild(valueInput);
+		oLine.appendChild(_newLabel("Person:"));
 		oLine.appendChild(personSelect);
+		oLine.appendChild(_newLabel("Type:"));
 		oLine.appendChild(typeSelect);
+		oLine.appendChild(_newLabel("Account:", true));
 		oLine.appendChild(accountSelect);
 		oResult.appendChild(oLine);
 	};
