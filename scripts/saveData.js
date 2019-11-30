@@ -21,11 +21,13 @@ var saveData = (function () {
 		aLines.forEach(function (oLine) {
 			var sValue = oLine.querySelectorAll(".valueInput")[0].value;
 			var sPerson = oLine.querySelectorAll(".personSelect")[0].value;
+			var sTargetAccount = (oLine.querySelectorAll(".accountSelect:not(.hideElement)")[0] || {}).value || "";
 			var sType = oLine.querySelectorAll(".typeSelect")[0].value;
 
 			var sTemp = _addTag(sDate, "Date");
 			sTemp += _addTag(sStore, "Store");
 			sTemp += _addTag(sSourceAccount, "SourceAccount");
+			sTemp += _addTag(sTargetAccount, "TargetAccount");
 			sTemp += _addTag(sValue, "Value");
 			sTemp += _addTag(sPerson, "Person");
 			sTemp += _addTag(sType, "Type");
