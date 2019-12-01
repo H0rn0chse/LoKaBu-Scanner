@@ -229,10 +229,12 @@ var editData = (function () {
 				case "Transfer":
 					oEvt.target.parentElement.querySelector(".accountSelect").classList.remove("hideElement");
 					oEvt.target.parentElement.querySelector("span:last-of-type").classList.remove("hideElement");
+					oEvt.target.parentElement.querySelector(".personSelect").disabled = true;
 					break;
 				default:
 					oEvt.target.parentElement.querySelector(".accountSelect").classList.add("hideElement");
 					oEvt.target.parentElement.querySelector("span:last-of-type").classList.add("hideElement");
+					oEvt.target.parentElement.querySelector(".personSelect").disabled = false;
 			}
 		}
 		typeSelect.classList.add("typeSelect");

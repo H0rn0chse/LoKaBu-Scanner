@@ -38,6 +38,9 @@ var saveData = (function () {
 			var sPerson = oLine.querySelectorAll(".personSelect")[0].value;
 			var sTargetAccount = (oLine.querySelectorAll(".accountSelect:not(.hideElement)")[0] || {}).value || "";
 			var sType = oLine.querySelectorAll(".typeSelect")[0].value;
+			if (sType === "Transfer") {
+				sPerson = "";
+			}
 
 			var sTemp = _addTag(sDate, "Date");
 			var sTemp = _addTag(sTimeStamp, "ID");
