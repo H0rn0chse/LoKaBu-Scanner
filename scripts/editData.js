@@ -125,14 +125,16 @@ var editData = (function () {
 	function _calcSum() {
 		var oResult = document.getElementById("results");
 		var oSpan = oResult.querySelector(".lastLine span");
-		var fSum = 0;
-		var aLineValues = oResult.querySelectorAll(".line .valueInput");
-		aLineValues.forEach(function (oInput) {
-			var sValue = oInput.value.replace(/,/g,".");
-			fSum += parseFloat(sValue);
-		})
+		if (oSpan) {
+			var fSum = 0;
+			var aLineValues = oResult.querySelectorAll(".line .valueInput");
+			aLineValues.forEach(function (oInput) {
+				var sValue = oInput.value.replace(/,/g,".");
+				fSum += parseFloat(sValue);
+			})
 
-		oSpan.innerText = "Sum: " + fSum.toFixed(2).replace(/\./g,",") + " €";
+			oSpan.innerText = "Sum: " + fSum.toFixed(2).replace(/\./g,",") + " €";	
+		}
 	}
 
 	function _selectAll () {
@@ -177,11 +179,12 @@ var editData = (function () {
 	}
 
 	function _checkNumberInput (oEvt) {
-		var bValid = oEvt.target.checkValidity()
+		var oInput = oEvt.target ? oEvt.target : oEvt;
+		var bValid = oInput.checkValidity()
 		if(bValid) {
-			oEvt.target.classList.remove("invalidInput");
+			oInput.classList.remove("invalidInput");
 		} else {
-			oEvt.target.classList.add("invalidInput");
+			oInput.classList.add("invalidInput");
 		}
 		_calcSum();
 		return bValid;
@@ -203,6 +206,7 @@ var editData = (function () {
 		valueInput.value = fValue;
 		valueInput.oninput = _checkNumberInput
 		valueInput.classList.add("valueInput");
+		_checkNumberInput(valueInput);
 
 		var personSelect = document.createElement("select");
 		_persons.forEach(function (person) {
