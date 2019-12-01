@@ -12,6 +12,15 @@ var saveData = (function () {
 		return sFilename + "_" + iTimestamp + ".fragment.xml";
 	}
 
+	function _sanitizeValue (sValue) {
+		sValue = sValue.replace(/,/g, '.');
+		sValue = parseFloat(sValue).toFixed(2);
+		//Remove leading zeros
+		sValue = sValue.replace(/^0+/, '');
+		sValue = sValue.replace(/\./g, '')
+		return sValue
+	}
+
 	function _collectData () {
 		function _addTag(sValue, sTag) {
 			return "<"+ sTag + ">" + sValue + "</"+ sTag + ">"
@@ -24,7 +33,7 @@ var saveData = (function () {
 
 		var aLines = oResult.querySelectorAll(".line");
 		aLines.forEach(function (oLine) {
-			var sValue = oLine.querySelectorAll(".valueInput")[0].value.replace(/,/g, "").replace(/^0+/, '');
+			var sValue = _sanitizeValue(oLine.querySelectorAll(".valueInput")[0].value);
 			var sPerson = oLine.querySelectorAll(".personSelect")[0].value;
 			var sTargetAccount = (oLine.querySelectorAll(".accountSelect:not(.hideElement)")[0] || {}).value || "";
 			var sType = oLine.querySelectorAll(".typeSelect")[0].value;
