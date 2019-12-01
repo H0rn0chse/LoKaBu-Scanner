@@ -30,6 +30,7 @@ var saveData = (function () {
 		var sDate = oResult.querySelectorAll(".baseLine .dateInput")[0].value
 		var sStore = oResult.querySelectorAll(".baseLine .storeSelect")[0].value
 		var sSourceAccount = oResult.querySelectorAll(".baseLine .accountSelect")[0].value
+		var sTimeStamp = Date.now();
 
 		var aLines = oResult.querySelectorAll(".line");
 		aLines.forEach(function (oLine) {
@@ -39,6 +40,7 @@ var saveData = (function () {
 			var sType = oLine.querySelectorAll(".typeSelect")[0].value;
 
 			var sTemp = _addTag(sDate, "Date");
+			var sTemp = _addTag(sTimeStamp, "ID");
 			sTemp += _addTag(sStore, "Store");
 			sTemp += _addTag(sSourceAccount, "SourceAccount");
 			sTemp += _addTag(sTargetAccount, "TargetAccount");
