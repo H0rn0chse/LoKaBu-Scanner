@@ -276,6 +276,23 @@ var editData = (function () { // eslint-disable-line no-unused-vars
 			var oParent = box.parentElement;
 			oParent.parentElement.removeChild(oParent);
 		});
+	}
+
+	function addTabListener () {
+		$('#results').on('keydown', 'input', function (oEvent) {
+			var aInputs = $('#results').find('.line > input[TabIndex!="-1"]');
+			var oNext;
+			if (oEvent.key === "Enter" && oEvent.shiftKey) {
+				oNext = aInputs.eq(aInputs.index(this) - 1);
+			} else {
+				oNext = aInputs.eq((aInputs.index(this) + 1) % aInputs.length);
+			}
+			if (oNext.length) {
+				oNext.focus();
+			}
+			return false;
+		});
+	}
 
 	return {
 		init: function () {
