@@ -1,7 +1,7 @@
-var TesseractWorker = (function (tesseractWorker) {
-
+/* global Tesseract */
+var TesseractWorker = (function (tesseractWorker) { // eslint-disable-line no-unused-vars
 	const langs = "deu";
-    const { createWorker} = Tesseract;
+	const { createWorker } = Tesseract;
 	var worker = {};
 	var _progressCallback = p => console.log(p);
 	var _fnResolve = () => {};
@@ -9,11 +9,11 @@ var TesseractWorker = (function (tesseractWorker) {
 	var _initPromise = new Promise(function (resolve, reject) {
 		_fnResolve = resolve;
 		_fnReject = reject;
-	})
+	});
 
-    tesseractWorker.loadImage = function (img, progressCallback, finallyCallback) {
+	tesseractWorker.loadImage = function (img, progressCallback, finallyCallback) {
 		return _initPromise.then(function () {
-			if(progressCallback) {
+			if (progressCallback) {
 				_progressCallback = function (p) {
 					progressCallback(p);
 				};
@@ -22,16 +22,16 @@ var TesseractWorker = (function (tesseractWorker) {
 				.then(function (obj) {
 					finallyCallback(obj);
 				})
-				.finally(async function() {
-					//await worker.terminate();
+				.finally(async function () {
+					// await worker.terminate();
 				});
 		});
-    };
+	};
 
-    tesseractWorker.stop = function () {
+	tesseractWorker.stop = function () {
 		worker.terminate();
 	};
-	
+
 	tesseractWorker.init = function () {
 		worker = createWorker({
 			logger: _progressCallback
@@ -44,8 +44,8 @@ var TesseractWorker = (function (tesseractWorker) {
 			_fnResolve();
 		}).catch(function () {
 			_fnReject();
-		})
-	}
+		});
+	};
 
-    return tesseractWorker;
-  }(TesseractWorker || {}));
+	return tesseractWorker;
+}(TesseractWorker || {})); // eslint-disable-line no-use-before-define

@@ -1,21 +1,22 @@
-var imgSelection = (function () {
+/* global */
+var imgSelection = (function () { // eslint-disable-line no-unused-vars
 	var _bMouseDown = false;
 	var _oInitialTopLeftPosition = {
-		x:0,
-		y:0
+		x: 0,
+		y: 0
 	};
 
 	function _initHandler () {
 		var oImage = document.getElementById("sample");
-		oImage.ondragstart = function(oEvt) { oEvt.preventDefault();}
-		oImage.ondrag = function(oEvt) { oEvt.preventDefault();}
+		oImage.ondragstart = function (oEvt) { oEvt.preventDefault() };
+		oImage.ondrag = function (oEvt) { oEvt.preventDefault() };
 
 		document.onmousedown = function (oEvt) {
 			var oSelection = document.getElementById("imgSelection");
 
 			if (oEvt.target === oImage || oEvt.target === oSelection) {
 				_bMouseDown = true;
-				
+
 				oSelection.style.left = oEvt.clientX + "px";
 				_oInitialTopLeftPosition.x = oEvt.clientX;
 				oSelection.style.top = oEvt.clientY + "px";
@@ -23,7 +24,7 @@ var imgSelection = (function () {
 				oSelection.style.width = "0px";
 				oSelection.style.height = "0px";
 			}
-		}
+		};
 		document.onmousemove = function (oEvt) {
 			var oSelection = document.getElementById("imgSelection");
 
@@ -39,11 +40,12 @@ var imgSelection = (function () {
 				oSelection.style.width = Math.abs(iWidth) + "px";
 				oSelection.style.height = Math.abs(iHeight) + "px";
 			}
-		}
+		};
 		document.onmouseup = function (oEvt) {
 			_bMouseDown = false;
-		}
+		};
 	}
+
 	return {
 		init: function () {
 			_initHandler();
