@@ -1,4 +1,5 @@
-var editData = (function () {
+/* global saveData $ */
+var editData = (function () { // eslint-disable-line no-unused-vars
 	"use strict";
 
 	var _stores = [];
@@ -54,12 +55,12 @@ var editData = (function () {
 		var addLineButton = document.createElement("button");
 		addLineButton.innerText = "Add Line";
 		addLineButton.onclick = function () {
-			_addLine("0,00")
+			_addLine("0,00");
 		};
 
 		var deleteLineButton = document.createElement("button");
 		deleteLineButton.innerText = "Delete Line";
-		deleteLineButton.onclick = _deleteLine
+		deleteLineButton.onclick = _deleteLine;
 
 		oUpperBaseLine.appendChild(exportButton);
 		oUpperBaseLine.appendChild(selectAllButton);
@@ -76,7 +77,7 @@ var editData = (function () {
 		oBaseLine.classList.add("baseLine");
 
 		var dateInput = document.createElement("input");
-		dateInput.setAttribute("type", "date")
+		dateInput.setAttribute("type", "date");
 		dateInput.valueAsDate = new Date();
 		dateInput.classList.add("dateInput");
 
@@ -110,7 +111,7 @@ var editData = (function () {
 			elem = elem.replace(/,/g, ".");
 			elem = parseFloat(elem).toFixed(2).toString();
 			elem = elem.replace(/\./g, ",");
-			_addLine(elem)
+			_addLine(elem);
 		});
 
 		var oLastLine = document.createElement("div");
@@ -120,20 +121,20 @@ var editData = (function () {
 
 		oLastLine.appendChild(oSumSpan);
 		oResult.appendChild(oLastLine);
-	};
+	}
 
-	function _calcSum() {
+	function _calcSum () {
 		var oResult = document.getElementById("results");
 		var oSpan = oResult.querySelector(".lastLine span");
 		if (oSpan) {
 			var fSum = 0;
 			var aLineValues = oResult.querySelectorAll(".line .valueInput");
 			aLineValues.forEach(function (oInput) {
-				var sValue = oInput.value.replace(/,/g,".");
+				var sValue = oInput.value.replace(/,/g, ".");
 				fSum += parseFloat(sValue);
-			})
+			});
 
-			oSpan.innerText = "Sum: " + fSum.toFixed(2).replace(/\./g,",") + " €";	
+			oSpan.innerText = "Sum: " + fSum.toFixed(2).replace(/\./g, ",") + " €";
 		}
 	}
 
@@ -142,14 +143,14 @@ var editData = (function () {
 		aCheckboxes.forEach(function (item) {
 			item.checked = true;
 		});
-	};
+	}
 
 	function _selectNone () {
 		var aCheckboxes = document.querySelectorAll('input[type="checkbox"]');
 		aCheckboxes.forEach(function (item) {
 			item.checked = false;
 		});
-	};
+	}
 
 	function _setType () {
 		var sSelectedIndex = document.querySelector(".outerTypeSelect").selectedIndex;
@@ -158,7 +159,7 @@ var editData = (function () {
 			var oSelect = box.parentElement.querySelector(".typeSelect");
 			oSelect.selectedIndex = sSelectedIndex;
 		});
-	};
+	}
 
 	function _setPerson () {
 		var sSelectedIndex = document.querySelector(".outerPersonSelect").selectedIndex;
@@ -167,9 +168,9 @@ var editData = (function () {
 			var oSelect = box.parentElement.querySelector(".personSelect");
 			oSelect.selectedIndex = sSelectedIndex;
 		});
-	};
+	}
 
-	function _newLabel(sText, bHide) {
+	function _newLabel (sText, bHide) {
 		var oSpan = document.createElement("span");
 		oSpan.innerText = sText;
 		if (bHide) {
@@ -180,8 +181,8 @@ var editData = (function () {
 
 	function _checkNumberInput (oEvt) {
 		var oInput = oEvt.target ? oEvt.target : oEvt;
-		var bValid = oInput.checkValidity()
-		if(bValid) {
+		var bValid = oInput.checkValidity();
+		if (bValid) {
 			oInput.classList.remove("invalidInput");
 		} else {
 			oInput.classList.add("invalidInput");
@@ -198,17 +199,19 @@ var editData = (function () {
 
 		var checkboxInput = document.createElement("input");
 		checkboxInput.setAttribute("type", "checkbox");
+		checkboxInput.setAttribute("tabindex", -1);
 		checkboxInput.classList.add("checkboxInput");
 
 		var valueInput = document.createElement("input");
 		valueInput.setAttribute("type", "text");
-		valueInput.setAttribute("pattern", "^[0-9]+([,][0-9]{0,2})?$")
+		valueInput.setAttribute("pattern", "^[0-9]+([,][0-9]{0,2})?$");
 		valueInput.value = fValue;
-		valueInput.oninput = _checkNumberInput
+		valueInput.oninput = _checkNumberInput;
 		valueInput.classList.add("valueInput");
 		_checkNumberInput(valueInput);
 
 		var personSelect = document.createElement("select");
+		personSelect.setAttribute("tabindex", -1);
 		_persons.forEach(function (person) {
 			var oOption = document.createElement("option");
 			oOption.text = person;
@@ -218,6 +221,7 @@ var editData = (function () {
 		personSelect.classList.add("personSelect");
 
 		var typeSelect = document.createElement("select");
+		typeSelect.setAttribute("tabindex", -1);
 		_types.forEach(function (type) {
 			var oOption = document.createElement("option");
 			oOption.text = type;
@@ -225,21 +229,22 @@ var editData = (function () {
 			typeSelect.appendChild(oOption);
 		});
 		typeSelect.onchange = function (oEvt) {
-			switch(oEvt.target.value) {
-				case "Transfer":
-					oEvt.target.parentElement.querySelector(".accountSelect").classList.remove("hideElement");
-					oEvt.target.parentElement.querySelector("span:last-of-type").classList.remove("hideElement");
-					oEvt.target.parentElement.querySelector(".personSelect").disabled = true;
-					break;
-				default:
-					oEvt.target.parentElement.querySelector(".accountSelect").classList.add("hideElement");
-					oEvt.target.parentElement.querySelector("span:last-of-type").classList.add("hideElement");
-					oEvt.target.parentElement.querySelector(".personSelect").disabled = false;
+			switch (oEvt.target.value) {
+			case "Transfer":
+				oEvt.target.parentElement.querySelector(".accountSelect").classList.remove("hideElement");
+				oEvt.target.parentElement.querySelector("span:last-of-type").classList.remove("hideElement");
+				oEvt.target.parentElement.querySelector(".personSelect").disabled = true;
+				break;
+			default:
+				oEvt.target.parentElement.querySelector(".accountSelect").classList.add("hideElement");
+				oEvt.target.parentElement.querySelector("span:last-of-type").classList.add("hideElement");
+				oEvt.target.parentElement.querySelector(".personSelect").disabled = false;
 			}
-		}
+		};
 		typeSelect.classList.add("typeSelect");
 
 		var accountSelect = document.createElement("select");
+		accountSelect.setAttribute("tabindex", -1);
 		_accounts.forEach(function (account) {
 			var oOption = document.createElement("option");
 			oOption.text = account;
@@ -263,7 +268,7 @@ var editData = (function () {
 		} else {
 			oResult.appendChild(oLine);
 		}
-	};
+	}
 
 	function _deleteLine () {
 		var aCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
@@ -271,7 +276,6 @@ var editData = (function () {
 			var oParent = box.parentElement;
 			oParent.parentElement.removeChild(oParent);
 		});
-	};
 
 	return {
 		init: function () {
@@ -291,7 +295,7 @@ var editData = (function () {
 				"TK Maxx",
 				"DM",
 				"Amazon"
-			]
+			];
 			_accounts = [
 				"Aaron_Bar",
 				"Aaron_Konto",
@@ -323,11 +327,12 @@ var editData = (function () {
 				"Auto",
 				"Katze"
 			];
+			addTabListener();
 		},
 
 		load: function (aArr) {
 			_load(aArr);
 			_calcSum();
 		}
-	}
+	};
 })();
