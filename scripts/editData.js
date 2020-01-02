@@ -280,17 +280,19 @@ var editData = (function () { // eslint-disable-line no-unused-vars
 
 	function addTabListener () {
 		$('#results').on('keydown', 'input', function (oEvent) {
-			var aInputs = $('#results').find('.line > input[TabIndex!="-1"]');
-			var oNext;
-			if (oEvent.key === "Enter" && oEvent.shiftKey) {
-				oNext = aInputs.eq(aInputs.index(this) - 1);
-			} else {
-				oNext = aInputs.eq((aInputs.index(this) + 1) % aInputs.length);
+			if (oEvent.key === "Enter") {
+				var aInputs = $('#results').find('.line > input[TabIndex!="-1"]');
+				var oNext;
+				if (oEvent.shiftKey) {
+					oNext = aInputs.eq(aInputs.index(this) - 1);
+				} else {
+					oNext = aInputs.eq((aInputs.index(this) + 1) % aInputs.length);
+				}
+				if (oNext.length) {
+					oNext.focus();
+				}
+				return false;
 			}
-			if (oNext.length) {
-				oNext.focus();
-			}
-			return false;
 		});
 	}
 
