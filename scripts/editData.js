@@ -204,7 +204,7 @@ var editData = (function () { // eslint-disable-line no-unused-vars
 
 		var valueInput = document.createElement("input");
 		valueInput.setAttribute("type", "text");
-		valueInput.setAttribute("pattern", "^[0-9]+([,][0-9]{0,2})?$");
+		valueInput.setAttribute("pattern", "^(\\+|-)?[0-9]+([,][0-9]{0,2})?$");
 		valueInput.value = fValue;
 		valueInput.oninput = _checkNumberInput;
 		valueInput.classList.add("valueInput");
