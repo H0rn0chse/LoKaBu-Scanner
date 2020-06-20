@@ -3,7 +3,7 @@
   "productName": "LoKaBu-Scanner",
   "version": "1.3.0",
   "description": "LoKaBu-Scanner",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {},
   "author": {
     "name": "H0rn0chse",
@@ -15,11 +15,14 @@
   },
   "license": "GPL-3.0",
   "devDependencies": {
+    "connect": "^3.7.0",
     "eslint": "^6.7.2",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
-  }
+    "eslint-plugin-standard": "^4.0.1",
+    "serve-static": "^1.14.1"
+  },
+  "dependencies": {}
 }
