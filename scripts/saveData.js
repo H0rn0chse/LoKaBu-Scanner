@@ -44,7 +44,7 @@ var saveData = (function () { // eslint-disable-line no-unused-vars
 			}
 
 			var sTemp = _addTag(sDate, "Date");
-			sTemp = _addTag(sTimeStamp, "ID");
+			sTemp += _addTag(sTimeStamp, "ID");
 			sTemp += _addTag(sStore, "Store");
 			sTemp += _addTag(sSourceAccount, "SourceAccount");
 			sTemp += _addTag(sTargetAccount, "TargetAccount");
