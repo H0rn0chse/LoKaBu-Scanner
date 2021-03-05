@@ -1,6 +1,9 @@
 #results {
 	width: max-content;
 	height: max-content;
+	top: 3em;
+    position: relative;
+}
 }
 
 input[type="checkbox"] {
