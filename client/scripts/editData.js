@@ -1,4 +1,4 @@
-/* global saveData $ */
+/* global saveData, jQuery */
 var editData = (function () { // eslint-disable-line no-unused-vars
 	"use strict";
 
@@ -279,9 +279,9 @@ var editData = (function () { // eslint-disable-line no-unused-vars
 	}
 
 	function addTabListener () {
-		$('#results').on('keydown', 'input', function (oEvent) {
+		jQuery('#results').on('keydown', 'input', function (oEvent) {
 			if (oEvent.key === "Enter") {
-				var aInputs = $('#results').find('.line > input[TabIndex!="-1"]');
+				var aInputs = jQuery('#results').find('.line > input[TabIndex!="-1"]');
 				var oNext;
 				if (oEvent.shiftKey) {
 					oNext = aInputs.eq(aInputs.index(this) - 1);

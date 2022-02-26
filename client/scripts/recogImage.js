@@ -21,7 +21,7 @@ var recogImage = (function () { // eslint-disable-line no-unused-vars
 		var context = canvas.getContext('2d');
 
 		// Reset canvas
-		canvas.style.visibility = 'visible';
+		// canvas.style.visibility = 'visible';
 		canvas.height = canvas.width = 0;
 
 		// get Rectangle
@@ -90,7 +90,6 @@ var recogImage = (function () { // eslint-disable-line no-unused-vars
 		context.rotate(imgAngle * Math.PI / 180);
 		context.drawImage(sourceImage, sourceX * sizeFactor, sourceY * sizeFactor, targetWidth * sizeFactor, targetHeight * sizeFactor, 0, 0, canvas.width, canvas.height);
 		context.restore();
-
 		return canvas;
 	}
 

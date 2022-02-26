@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<link rel="icon" type="image/x-icon" href="./favicon.svg">
+        <title>LoKaBuScanner</title>
+		<!-- anonymized statistics-->
+        <script async defer data-website-id="c49fe363-37d6-42e6-8c5e-11f779d8ec81" src="https://h0rn0chse-umami.herokuapp.com/umami.js"></script>
+
+		<script src="./libs/jquery/jquery.min.js"></script>
+		<script src='./libs/tesseract.js/tesseract.min.js'></script>
+		<script src="./libs/feather-icons/feather.min.js"></script>
+		<script type="module" src="./libs/wc-github-corners/index.es.js"></script>
+
+        <script src="scripts/index.js" defer></script>
+		<script src="scripts/loadImage.js" defer></script>
+		<script src="scripts/recogImage.js" defer></script>
+		<script src="scripts/tesseractWorker.js" defer></script>
+		<script src="scripts/editData.js" defer></script>
+		<script src="scripts/saveData.js" defer></script>
+		<script src="scripts/imgSelection.js" defer></script>
+
+		<link rel="stylesheet" href="styles/index.css">
+		<link rel="stylesheet" href="styles/editData.css">
+		<link rel="stylesheet" href="styles/imgSelection.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="left">
+				<div class="buttonArea">
+					<button onclick="loadImage.load()">load Image</button> <br />
+					<button onclick="recogImage.start()">start Image Recognition</button>
+				</div>
+				<img id="sample" onload="loadImage.setNewImageProperies()" src="images/default.png">
+
+                <div id="imgSelection"></div>
+            </div>
+            <div id="right">
+				<div id="results"></div>
+				<canvas id="canvas"></canvas>
+            </div>
+        </div>
+        <div id="hidden"></div>
+		<github-corners
+			label="Check out the GitHub repository!"
+			repo="H0rn0chse/LoKaBu-Scanner"
+			blank="true"
+		>
+		</github-corners>
+    </body>
+</html>
